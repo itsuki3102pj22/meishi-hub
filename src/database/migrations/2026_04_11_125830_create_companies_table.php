@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
+            $table->string('name'); // 会社名
+            $table->string('name_kana')->nullable(); // 会社名カナ
+            $table->string('industry')->nullable(); //　業種
+            $table->string('phone')->nullable(); //　電話番号
+            $table->string('website')->nullable(); //WebサイトURL
+            $table->text('address')->nullable(); //　住所
+            $table->text('memo')->nullable(); // メモ
             $table->timestamps();
         });
     }

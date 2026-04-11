@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('todos', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('deal_id')->nullable()->constrained()->nullOnDelete(); // 商談ID
+            $table->foreignId('card_id')->nullable()->constrained()->nullOnDelete(); //　名刺ID
+            $table->string('title'); //　タイトル
+            $table->date('due_date')->nullable(); //　期限
+            $table->boolean('is_done')->default(false); //　完了フラグ
             $table->timestamps();
         });
     }
