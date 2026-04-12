@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Todo;
 
 class TodoController extends Controller
 {
@@ -61,4 +62,14 @@ class TodoController extends Controller
     {
         //
     }
+
+    // ToDoの完了/未完了を切り替える
+    public function toggle(Todo $todo)
+    {
+        $todo->is_done = !$todo->is_done;
+        $todo->save();
+
+        return redirect()->back();
+    }
+    
 }
