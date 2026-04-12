@@ -29,15 +29,26 @@ Route::get('/dashboard', function () {
     $recentDeals = Deal::with('company')->latest()->take(4)->get();
     $todos       = Todo::with(['deal', 'card'])->where('is_done', false)->take(4)->get();
 
-    return view('dashboard', compact('stats', 'recentCards', 'recentDeals', 'todos'));
+    $companies = Company::all();
+
+    return view('dashboard', compact(
+        'stats',
+        'recentCards',
+        'recentDeals',
+        'todos',
+        'companies'
+    ));
 })->name('dashboard');
 
 // リソースルート
 Route::resource('companies', CompanyController::class); //　会社
+Route::resource('cards', CardController::class); //　名刺（単独）
 Route::resource('companies.cards', CardController::class)->shallow(); //　会社に紐づく名刺
 Route::resource('deals', DealController::class); //　商談
 Route::resource('todos', TodoController::class); //　Todo
 Route::patch('/todos/{todo}/toggle', [TodoController::class, 'toggle'])->name('todos.toggle'); //　Todoの完了/未完了切り替え
+
+
 
 //　認証ルート
 Route::middleware('auth')->group(function () {
