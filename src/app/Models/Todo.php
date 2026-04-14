@@ -15,15 +15,21 @@ class Todo extends Model
         'is_done',
     ];
 
+    protected $casts = [
+        'due_date' => 'date',
+        'is_done' => 'boolean',
+    ];
+
+    // ToDoが所属する名刺を取得
+    public function card(): BelongsTo
+    {
+        return $this->belongsTo(Card::class);
+    }
+
     // ToDoが所属するDealを取得
-    public function deals(): BelongsTo
+    public function deal()
     {
         return $this->belongsTo(Deal::class);
     }
 
-    // ToDoが所属する名刺を取得
-    public function cards(): BelongsTo
-    {
-        return $this->belongsTo(Card::class);
-    }
 }

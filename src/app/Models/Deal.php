@@ -20,7 +20,7 @@ class Deal extends Model
     ];
 
     // 商談相手の会社を取得
-    protected $cards = [
+    protected $casts = [
         'close_date' => 'date',
         'amount' => 'integer',
         'progress' => 'integer',
