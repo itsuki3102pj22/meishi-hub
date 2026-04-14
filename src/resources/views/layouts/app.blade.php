@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -9,7 +10,6 @@
 <body class="bg-gray-50 text-gray-800">
     <div class="flex h-screen overflow-hidden">
 
-        {{-- サイドバー --}}
         <aside class="w-56 bg-white border-r border-gray-100 flex flex-col flex-shrink-0">
             <div class="px-5 py-5 border-b border-gray-100">
                 <div class="flex items-center gap-2">
@@ -47,10 +47,14 @@
                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>
                     案件管理
                 </a>
+                <a href="{{ route('todos.index') }}"
+                   class="flex items-center gap-2 px-3 py-2 rounded-lg text-sm {{ request()->routeIs('todos.*') ? 'bg-emerald-50 text-emerald-800 font-medium' : 'text-gray-500 hover:bg-gray-50' }}">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                    Todo
+                </a>
             </nav>
         </aside>
 
-        {{-- メインコンテンツ --}}
         <div class="flex-1 flex flex-col overflow-hidden">
             <header class="bg-white border-b border-gray-100 px-6 h-14 flex items-center gap-4 flex-shrink-0">
                 <h1 class="text-sm font-medium flex-1">@yield('title', 'ダッシュボード')</h1>
