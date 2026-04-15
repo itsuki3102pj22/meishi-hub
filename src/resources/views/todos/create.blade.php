@@ -11,7 +11,7 @@
         </a>
         <div>
             <h2 class="text-2xl font-bold text-slate-900">新規タスクを追加</h2>
-            <p class="text-sm text-slate-500 mt-0.5">やることを登録します</p>
+            <p class="text-sm text-slate-500 mt-0.5">タスクを登録します</p>
         </div>
     </div>
 
