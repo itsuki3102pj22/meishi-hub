@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Todo;
+use App\Models\User;
 
 class TodoSeeder extends Seeder
 {
@@ -13,6 +14,8 @@ class TodoSeeder extends Seeder
      */
     public function run(): void
     {
+         $user = User::first();
+         
          $todos = [
             ['deal_id' => 1, 'card_id' => 1, 'title' => '提案書の送付', 'due_date' => '2026-04-10', 'is_done' => true],
             ['deal_id' => 1, 'card_id' => 1, 'title' => '見積書作成・送付', 'due_date' => '2026-04-15', 'is_done' => false],
@@ -23,6 +26,7 @@ class TodoSeeder extends Seeder
         ];
 
         foreach ($todos as $todo) {
+            $todo['user_id'] = $user->id;
             Todo::create($todo);
         }
     }

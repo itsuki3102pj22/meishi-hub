@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Deal extends Model
 {
     protected $fillable = [
+        'user_id',
         'company_id',
         'card_id',
         'name',
@@ -35,6 +36,12 @@ class Deal extends Model
         'lost' => '失注',
     ];
 
+    // ユーザーとのリレーション
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
     // 商談に関連する会社を取得
     public function company(): BelongsTo
     {
@@ -57,5 +64,15 @@ class Deal extends Model
     public function getStatusLabelAttribute(): string
     {
         return self::STATUS_LABELS[$this->status] ?? $this->status;
+    }
+
+    // ログインユーザーのデータのみを取得するグローバルスコープ
+    protected static function booted(): void
+    {
+        static::addGlobalScope('user', function ($query) {
+            if (auth()->check()) {
+                $query->where('user_id', auth()->id());
+            }
+        });
     }
 }

@@ -41,6 +41,9 @@ class CompanyController extends Controller
             'memo' => 'nullable|string',
         ]);
 
+        // ユーザーIDを追加
+        $validated['user_id'] = auth()->id();
+
         // 会社作成
         $company = Company::create($validated);
         return redirect()->route('companies.show', $company)->with('success', '会社を登録しました。');
@@ -61,6 +64,10 @@ class CompanyController extends Controller
      */
     public function edit(Company $company)
     {
+        // 権限チェック
+        if ($company->user_id !== auth()->id()) {
+            abort(403, '権限がありません');
+        }
         // 会社情報を取得し、編集画面へ
         return view('companies.edit', compact('company'));
     }
@@ -70,6 +77,11 @@ class CompanyController extends Controller
      */
     public function update(Request $request, Company $company)
     {
+        // 権限チェック
+        if ($company->user_id !== auth()->id()) {
+            abort(403, '権限がありません');
+        }
+        
         // バリデーション
         $validated = $request->validate([
             'name' => 'required|string|max:255',
@@ -91,6 +103,11 @@ class CompanyController extends Controller
      */
     public function destroy(Company $company)
     {
+        // 権限チェック
+        if ($company->user_id !== auth()->id()) {
+            abort(403, '権限がありません');
+        }
+        
         // 会社を削除
         $company->delete();
         return redirect()->route('companies.index')->with('success', '会社を削除しました。');

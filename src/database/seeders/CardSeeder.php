@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Card;
+use App\Models\User;
 
 class CardSeeder extends Seeder
 {
@@ -13,6 +14,8 @@ class CardSeeder extends Seeder
      */
     public function run(): void
     {
+        $user = User::first();
+        
          $cards = [
             ['company_id' => 1, 'last_name' => '山田', 'first_name' => '太郎', 'last_name_kana' => 'ヤマダ', 'first_name_kana' => 'タロウ', 'department' => '営業部', 'position' => '部長', 'email' => 'yamada@techno.co.jp', 'phone' => '03-1234-5678', 'mobile' => '090-1234-5678', 'memo' => 'IT展示会で名刺交換。ERPシステムの導入に強い関心あり。'],
             ['company_id' => 1, 'last_name' => '伊藤', 'first_name' => '健一', 'last_name_kana' => 'イトウ', 'first_name_kana' => 'ケンイチ', 'department' => '技術部', 'position' => '取締役CTO', 'email' => 'ito@techno.co.jp', 'phone' => '03-1234-0001', 'memo' => '技術的な決裁権限あり。'],
@@ -22,6 +25,7 @@ class CardSeeder extends Seeder
          ];
          
          foreach ($cards as $card) {
+            $card['user_id'] = $user->id;
             Card::create($card);
          }
     }

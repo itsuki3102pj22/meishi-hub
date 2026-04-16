@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Todo extends Model
 {
     protected $fillable = [
+        'user_id',
         'deal_id',
         'card_id',
         'title',

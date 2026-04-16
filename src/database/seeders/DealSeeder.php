@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Deal;
+use App\Models\User;
 
 class DealSeeder extends Seeder
 {
@@ -13,6 +14,8 @@ class DealSeeder extends Seeder
      */
     public function run(): void
     {
+        $user = User::first();
+        
         $deals = [
             ['company_id' => 1, 'card_id' => 1, 'name' => 'ERPシステム導入', 'status' => 'negotiation', 'amount' => 3200000, 'progress' => 70, 'close_date' => '2026-05-15', 'memo' => '基幹業務システムのERP化について検討中。競合2社と比較検討中。'],
             ['company_id' => 2, 'card_id' => 3, 'name' => 'Webサイトリニューアル', 'status' => 'won', 'amount' => 1800000, 'progress' => 100, 'close_date' => '2026-04-01', 'memo' => '受注済み。制作開始。'],
@@ -22,6 +25,7 @@ class DealSeeder extends Seeder
         ];
         
         foreach ($deals as $deal) {
+            $deal['user_id'] = $user->id;
             Deal::create($deal);
         }
     }

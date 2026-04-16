@@ -48,6 +48,10 @@ class CardController extends Controller
             'fax' => 'nullable|string|max:20',
             'memo' => 'nullable|string',
         ]);
+        
+        // ユーザーIDを追加
+        $validated['user_id'] = auth()->id();
+        
         $card = Card::create($validated);
 
         return redirect()->route('cards.show', $card)->with('success', '名刺を登録しました。');
@@ -68,6 +72,10 @@ class CardController extends Controller
      */
     public function edit(Card $card)
     {
+        // 権限チェック
+        if ($card->user_id !== auth()->id()) {
+            abort(403, '権限がありません');
+        }
         // 会社一覧を取得し、名刺編集画面へ
         $companies = Company::orderBy('name')->get();
         return view('cards.edit', compact('card', 'companies'));
@@ -78,6 +86,11 @@ class CardController extends Controller
      */
     public function update(Request $request, Card $card)
     {
+        // 権限チェック
+        if ($card->user_id !== auth()->id()) {
+            abort(403, '権限がありません');
+        }
+        
         // バリデーション
         $validated = $request->validate([
             'last_name' => 'required|string|max:50',
@@ -103,6 +116,11 @@ class CardController extends Controller
      */
     public function destroy(Card $card)
     {
+        // 権限チェック
+        if ($card->user_id !== auth()->id()) {
+            abort(403, '権限がありません');
+        }
+        
         $company = $card->company;
         $card->delete();
         return redirect()->route('companies.show', $company)->with('success', '名刺を削除しました。');
