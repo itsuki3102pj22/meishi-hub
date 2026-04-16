@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Company;
+use App\Models\User;
 
 class CompanySeeder extends Seeder
 {
@@ -13,6 +14,9 @@ class CompanySeeder extends Seeder
      */
     public function run(): void
     {
+        // テストユーザーを取得
+        $user = User::first();
+        
         $companies = [
             ['name' => '株式会社テクノ', 'name_kana' => 'カブシキガイシャテクノ', 'industry' => 'IT・ソフトウェア', 'phone' => '03-1234-5678', 'address' => '東京都港区赤坂1-1-1'],
             ['name' => 'ABCコーポレーション', 'name_kana' => 'エービーシーコーポレーション', 'industry' => '製造・商社', 'phone' => '03-2345-6789', 'address' => '東京都渋谷区渋谷2-2-2'],
@@ -22,6 +26,7 @@ class CompanySeeder extends Seeder
         ];
 
         foreach ($companies as $company) {
+            $company['user_id'] = $user->id;
             Company::create($company);
         }
     }

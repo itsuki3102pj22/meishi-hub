@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Card extends Model
 {
     protected $fillable = [
+        'user_id',
         'company_id',
         'last_name',
         'first_name',
@@ -23,6 +24,12 @@ class Card extends Model
         'memo',
         'image_path'
     ];
+
+    // ユーザーとのリレーション
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 
     // 名刺が所属する会社を取得
     public function company(): BelongsTo
@@ -51,5 +58,15 @@ class Card extends Model
     public function getInitialsAttribute(): string
     {
         return mb_substr($this->last_name, 0, 1) . mb_substr($this->first_name, 0, 1);
+    }
+
+    // ログインユーザーのデータのみを取得するグローバルスコープ
+    protected static function booted(): void
+    {
+        static::addGlobalScope('user', function ($query) {
+            if (auth()->check()) {
+                $query->where('user_id', auth()->id());
+            }
+        });
     }
 }

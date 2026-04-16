@@ -58,6 +58,9 @@ class DealController extends Controller
             'memo' => 'nullable|string',
         ]);
 
+        // ユーザーIDを追加
+        $validated['user_id'] = auth()->id();
+        
         // 商談を登録
         $deals = Deal::create($validated);
         return redirect()->route('deals.show', $deals)->with('success', '案件を登録しました。');
